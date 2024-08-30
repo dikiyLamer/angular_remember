@@ -1,0 +1,39 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Создать заметку"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="createNoteForm">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Введите заголовок заметки!">
+          <input
+            nz-input
+            placeholder="Заголовок заметки"
+            formControlName="title"
+            nzRequired
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Введите описание заметки!">
+          <input
+            nz-input
+            placeholder="Описание заметки"
+            formControlName="description"
+            nzRequired
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="tags">
+      <app-tag
+        *ngFor="let tag of tags$ | async"
+        [tagData]="tag"
+        (clicked)="addOrDeleteTag($event)"
+        [isPicked]="tagsForNote"
+      />
+    </div>
+  </ng-container>
+</nz-modal>

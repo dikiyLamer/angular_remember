@@ -1,0 +1,37 @@
+<div class="search">
+  <form [formGroup]="searchForm">
+    <nz-input-group [nzSuffix]="suffixTemplateInfo">
+      <input
+        type="text"
+        nz-input
+        placeholder="Введите заголовок заметки"
+        formControlName="title"
+      />
+    </nz-input-group>
+  </form>
+</div>
+
+<ng-template #suffixTemplateInfo>
+  <span
+    [ngClass]="{ 'active-tag-search': !tagSearchActive }"
+    nz-icon
+    nzType="tag"
+    nz-tooltip
+    nzTooltipTitle="Добавить к поиску тег"
+    nz-popover
+    nzPopoverTrigger="click"
+    nzPopoverTitle="Выберите теги"
+    [(nzPopoverVisible)]="popoverVisible"
+    [nzPopoverContent]="contentTemplate"
+  ></span>
+</ng-template>
+
+<ng-template #contentTemplate>
+  <app-tag-list
+    (tagClicked)="tagsChanged($event)"
+    [(pickedTags)]="pickedTags"
+  />
+  <div class="buttons">
+    <button nz-button nzType="default" (click)="closePopover()">Закрыть</button>
+  </div>
+</ng-template>

@@ -1,0 +1,33 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Создать тег"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkDisabled]="!this.createTagForm.valid"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="createTagForm">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Введите название тега!">
+          <input
+            nz-input
+            placeholder="Название тега"
+            formControlName="title"
+            nzRequired
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="colors">
+      <p>Выберите цвет:</p>
+      <div class="colors__items">
+        <div
+          [class]="'colors__item ' + color"
+          *ngFor="let color of colors"
+          changeColor
+          (click)="changeCurrentColor(color)"
+        ></div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,8 @@
+<div class="tags">
+  <app-tag
+    *ngFor="let tag of tags$ | async"
+    [tagData]="tag"
+    (clicked)="onTagClicked(tag)"
+    [isPicked]="tags"
+  />
+</div>

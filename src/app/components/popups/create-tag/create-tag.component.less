@@ -1,0 +1,20 @@
+.colors {
+  margin-top: 10px;
+
+  &__items {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 16px;
+  }
+  &__item {
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    flex: 0 0 auto;
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}

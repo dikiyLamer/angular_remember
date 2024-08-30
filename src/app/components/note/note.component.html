@@ -1,0 +1,37 @@
+<div class="note">
+  <nz-card [nzTitle]="note.title" [nzExtra]="extraTemplate">
+    <p>{{ note.description }}</p>
+    <div class="tags">
+      <app-tag
+        [tagData]="tag"
+        [clickable]="false"
+        *ngFor="let tag of note.tags"
+      />
+    </div>
+  </nz-card>
+  <app-create-note
+    [isVisible]="isNoteUpdateOpen"
+    (close)="closeNoteUpdateModal()"
+    (create)="updateNote($event)"
+    [note]="note"
+  />
+</div>
+
+<ng-template #extraTemplate>
+  <div class="action-buttons">
+    <span
+      nz-icon
+      nzType="edit"
+      nzTheme="outline"
+      class="icon"
+      (click)="openUpdateNoteModal()"
+    ></span>
+    <span
+      nz-icon
+      nzType="delete"
+      nzTheme="outline"
+      class="icon"
+      (click)="deleteNote()"
+    ></span>
+  </div>
+</ng-template>
