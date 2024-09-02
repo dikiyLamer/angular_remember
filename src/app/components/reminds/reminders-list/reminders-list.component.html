@@ -1,0 +1,20 @@
+<div class="reminds">
+  <nz-table #basicTable [nzData]="reminds || []">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Дата</th>
+        <th>Заголовок</th>
+        <th>Частота</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.id }}</td>
+        <td>{{ data.date }}</td>
+        <td>{{ data.note.title }}</td>
+        <td>{{ data.note.whenRemind }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

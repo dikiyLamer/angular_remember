@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <app-search />
+  <div class="actions">
+    <button nz-button nzType="primary" (click)="openTagCreateModal()">
+      <span nz-icon nzType="plus" nzTheme="outline"></span> Добавить тег
+    </button>
+    <button nz-button nzType="primary" (click)="openNoteCreateModal()">
+      <span nz-icon nzType="plus" nzTheme="outline"></span> Добавить заметку
+    </button>
+  </div>
+  <div class="notes">
+    <app-note-list [notes]="notes$ | async" />
+  </div>
+</div>
+<app-create-tag
+  [isVisible]="isTagCreateOpen"
+  (close)="closeTagCreateModal()"
+  (create)="createTag($event)"
+/>
+
+<app-create-note
+  [isVisible]="isNoteCreateOpen"
+  (close)="closeNoteCreateModal()"
+  (create)="createNote($event)"
+/>

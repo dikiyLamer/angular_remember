@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,8 +7,9 @@ import {
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
-import { TAGS_COLORS } from 'src/app/shared/consts/tags';
+import { TagsService } from 'src/app/services/tags.service';
 import { TagsColors } from 'src/app/shared/helpers/types';
 import { Tag } from 'src/app/shared/interfaces/Tag';
 
@@ -20,14 +20,20 @@ import { Tag } from 'src/app/shared/interfaces/Tag';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagComponent implements OnInit {
+  @ViewChild('tagDiv') tagDiv: ElementRef<HTMLDialogElement>;
+
   @Input() tagData: Tag;
   @Input() clickable: boolean = true;
+  @Input() editable: boolean = false;
+
   @Input() set isPicked(tags: Tag[]) {
     this.isTagPicked = !!tags.find((elem) => elem.id === this.tagData.id);
   }
+
   @Output() clicked = new EventEmitter<Tag>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private tagsService: TagsService) {}
+
   public color: TagsColors;
   public isTagPicked: boolean;
 
@@ -35,11 +41,24 @@ export class TagComponent implements OnInit {
     this.color = this.tagData.color;
   }
 
-  @HostListener('pointerup')
   onClick() {
     if (!this.clickable) {
       return;
     }
+    this.pickTag();
     this.clicked.emit(this.tagData);
+  }
+
+  pickTag() {
+    if (!this.clickable) {
+      return;
+    }
+
+    this.isTagPicked = !this.isTagPicked;
+  }
+
+  deleteTag(e: Event) {
+    e.stopPropagation();
+    this.tagsService.deleteTag(this.tagData);
   }
 }

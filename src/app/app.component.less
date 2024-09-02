@@ -1,28 +1,20 @@
-:host {
-  display: block;
-  height: 100%;
-}
-
-.actions {
+.header {
   display: flex;
-  width: 100%;
-  gap: 24px;
-  justify-content: end;
-  margin-bottom: 40px;
+  border-bottom: 2px solid rgb(24, 144, 255);
+  margin-bottom: 10px;
+
+  &__item {
+    padding: 10px;
+    cursor: pointer;
+    color: rgb(24, 144, 255);
+    font-size: 24px;
+    margin-bottom: 0px;
+    &:hover {
+      color: lighten(rgb(24, 144, 255), 20%);
+    }
+  }
 }
 
-.wrapper {
-  padding: 10px 25%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.notes {
-  width: 100%;
-}
-
-.add-tag-search {
-  cursor: pointer;
-  font-size: 18px;
+.active {
+  color: darken(rgb(24, 144, 255), 40%);
 }

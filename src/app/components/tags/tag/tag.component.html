@@ -1,0 +1,18 @@
+<div
+  [attr.class]="color + ' ' + (isTagPicked ? 'picked' : '') + ' wrap'"
+  #tagDiv
+  (click)="onClick()"
+>
+  <span>{{ tagData.title }}</span>
+  <div *ngIf="editable">
+    <div class="action-buttons">
+      <span
+        nz-icon
+        nzType="delete"
+        nzTheme="outline"
+        class="icon"
+        (click)="deleteTag($event)"
+      ></span>
+    </div>
+  </div>
+</div>

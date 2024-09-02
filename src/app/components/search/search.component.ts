@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NotesService } from 'src/app/services/notes.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -9,6 +9,7 @@ import { Tag } from 'src/app/shared/interfaces/Tag';
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
   public popoverVisible: boolean = false;

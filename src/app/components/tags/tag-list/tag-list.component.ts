@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { TagsService } from 'src/app/services/tags.service';
 import { Tag } from 'src/app/shared/interfaces/Tag';
@@ -7,6 +13,7 @@ import { Tag } from 'src/app/shared/interfaces/Tag';
   selector: 'app-tag-list',
   templateUrl: './tag-list.component.html',
   styleUrls: ['./tag-list.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagListComponent {
   @Output() tagClicked = new EventEmitter<Tag[]>();
@@ -28,7 +35,7 @@ export class TagListComponent {
     if (tagIsPicked) {
       this.tags = this.tags.filter((elem) => elem.id !== tag.id);
     } else {
-      this.tags.push(tag);
+      this.tags = [...this.tags, tag];
     }
     this.tagClicked.emit(this.tags);
     this.pickedTagsChange.emit(this.tags);

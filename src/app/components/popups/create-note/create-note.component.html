@@ -3,6 +3,7 @@
   nzTitle="Создать заметку"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
+  [nzFooter]="buttons"
 >
   <ng-container *nzModalContent>
     <form [formGroup]="createNoteForm">
@@ -26,6 +27,27 @@
           />
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <label
+            nz-checkbox
+            formControlName="remind"
+            (input)="onCheckBoxChanged($event)"
+            >Напоминание</label
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="createNoteForm.value.remind">
+        <nz-form-control>
+          <nz-select formControlName="when">
+            <nz-option
+              [nzValue]="option"
+              [nzLabel]="option"
+              *ngFor="let option of remindDates"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
     </form>
     <div class="tags">
       <app-tag
@@ -37,3 +59,15 @@
     </div>
   </ng-container>
 </nz-modal>
+
+<ng-template #buttons>
+  <button nz-button nzType="default" (click)="handleCancel()">Отмена</button>
+  <button
+    nz-button
+    nzType="primary"
+    (click)="handleOk()"
+    [disabled]="createNoteForm.invalid"
+  >
+    Сохранить
+  </button>
+</ng-template>

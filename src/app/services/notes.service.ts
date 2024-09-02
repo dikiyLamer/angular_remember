@@ -5,17 +5,24 @@ import { DataStorageKeys } from '../shared/enums/data.enums';
 import { Tag } from '../shared/interfaces/Tag';
 import { BehaviorSubject } from 'rxjs';
 import { v4 } from 'uuid';
+import { ReminderService } from './reminder.service';
 
 @Injectable({ providedIn: 'root' })
 export class NotesService {
   private currentNotes$ = new BehaviorSubject<Note[]>(this.getNotes());
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private reminderService: ReminderService
+  ) {}
 
   createNote(data: Note) {
     data.id = v4();
     const notes = this.getNotes();
     const newNotes = [...notes, data];
     this.setNotes(newNotes);
+    if (data.whenRemind) {
+      this.reminderService.createInterval(data);
+    }
   }
 
   updateNote(data: Note) {
@@ -27,6 +34,10 @@ export class NotesService {
       return note;
     });
     this.setNotes(newNotes);
+    this.reminderService.deleteInterval(data);
+    if (data.whenRemind) {
+      this.reminderService.createInterval(data);
+    }
   }
 
   addTag(note: Note, tag: Tag) {
@@ -66,6 +77,7 @@ export class NotesService {
     const notes = this.getNotes();
     const newNotes = notes.filter((note) => note.id !== data.id);
     this.setNotes(newNotes);
+    this.reminderService.deleteInterval(data);
   }
 
   private getNotes(): Note[] {
@@ -76,6 +88,30 @@ export class NotesService {
     }
     return [];
   }
+
+  updateTagsInNotes(tag: Tag) {
+    const newNotes = this.getNotes().map((note) => {
+      note.tags = note.tags.map((noteTag) => {
+        if (noteTag.id === tag.id) {
+          return tag;
+        }
+        return noteTag;
+      });
+      return note;
+    });
+    this.setNotes(newNotes);
+    this.currentNotes$.next(newNotes);
+  }
+
+  deleteTagsInNotes(tag: Tag) {
+    const newNotes = this.getNotes().map((note) => {
+      note.tags = note.tags.filter((noteTag) => noteTag.id !== tag.id);
+      return note;
+    });
+    this.setNotes(newNotes);
+    this.currentNotes$.next(newNotes);
+  }
+
   private setNotes(notes: Note[]): void {
     this.localStorageService.setItem(
       DataStorageKeys.NOTE,

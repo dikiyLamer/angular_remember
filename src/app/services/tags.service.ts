@@ -4,10 +4,14 @@ import { DataStorageKeys } from '../shared/enums/data.enums';
 import { Tag } from '../shared/interfaces/Tag';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 } from 'uuid';
+import { NotesService } from './notes.service';
 
 @Injectable({ providedIn: 'root' })
 export class TagsService {
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private notesService: NotesService
+  ) {}
   private currentTags$ = new BehaviorSubject<Tag[]>(this.getTags());
   createTag(data: Tag) {
     data.id = v4();
@@ -25,6 +29,7 @@ export class TagsService {
       return tag;
     });
     this.setTags(newTags);
+    this.notesService.updateTagsInNotes(data);
   }
 
   private getTags(): Tag[] {
@@ -42,5 +47,12 @@ export class TagsService {
 
   getAllTags(): Observable<Tag[]> {
     return this.currentTags$.asObservable();
+  }
+
+  deleteTag(data: Tag) {
+    const tags = this.getTags();
+    const newTags = tags.filter((tag) => tag.id !== data.id);
+    this.setTags(newTags);
+    this.notesService.deleteTagsInNotes(data);
   }
 }

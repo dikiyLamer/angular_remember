@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TAGS_COLORS } from 'src/app/shared/consts/tags';
 import { TagsColors } from 'src/app/shared/helpers/types';
@@ -9,6 +15,7 @@ import { Tag } from 'src/app/shared/interfaces/Tag';
   selector: 'app-create-tag',
   templateUrl: './create-tag.component.html',
   styleUrls: ['./create-tag.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTagComponent {
   @Input() isVisible: boolean;

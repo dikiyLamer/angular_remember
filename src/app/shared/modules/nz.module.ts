@@ -12,6 +12,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 registerLocaleData(en);
 
@@ -27,6 +30,9 @@ registerLocaleData(en);
     NzFormModule,
     NzToolTipModule,
     NzPopoverModule,
+    NzCheckboxModule,
+    NzNotificationModule,
+    NzTableModule,
   ],
   exports: [
     NzModalModule,
@@ -38,6 +44,9 @@ registerLocaleData(en);
     NzFormModule,
     NzToolTipModule,
     NzPopoverModule,
+    NzCheckboxModule,
+    NzNotificationModule,
+    NzTableModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
 })

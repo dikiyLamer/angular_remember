@@ -1,3 +1,4 @@
+import { RemindDates } from '../enums/cron.enums';
 import { Tag } from './Tag';
 
 export interface Note {
@@ -6,4 +7,5 @@ export interface Note {
   description: string;
   tags: Tag[];
   created?: string;
+  whenRemind?: RemindDates | null;
 }
